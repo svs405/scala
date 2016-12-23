@@ -5,7 +5,7 @@ object  main{
 
   def g(f:Int => Int, x : Int) = f(f(x))	//task output function #2
   
-  def my_f(f: Int => Int, x: Int) = g(f,x)	//ресурс, который позволяет любому пользователю использовать самые современные трафики
+  def my_f(f: Int => Int, x: Int) = g(f,x)	//task my_function
 
   def main(args : Array[String]){
     println(my_f(f,7))
