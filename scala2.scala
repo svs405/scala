@@ -5,10 +5,11 @@ def isSorted[A](items: Array[A], compare: (A, A) => Boolean, eq:(A,A)=>Boolean):
   
   case Array()     => true  
   case Array(_)    => true 
-  case Array(_*) => eq(items(0),items(1) ) match{
-    case true => isSorted(items tail,compare,eq)
-    case false => compare(items(0),items(1)) && isSorted(items tail,compare,eq) 
-  }
+  case Array(_*) => eq( items(0), items(1) ) && 
+                    isSorted(items tail,compare,eq) ||
+                    compare(items(0),items(1)) && 
+                    isSorted(items tail,compare,eq) 
+  
   
 }
   
