@@ -1,37 +1,24 @@
 object main {
 
-    def isSorted[A](x:Array[A],compareFunction:(A,A)=>Boolean):Boolean={
-      
-      def localCompare(x:A,y:A):Boolean={
-        x==y match {
-          case true => true
-          case false => false
-        }
-      }
-      
-      def isEq(iter:Int):Boolean={
-      
-        x.length-iter -1 match{
-          case 0 => true
-          case _ => localCompare(x(iter),x(iter+1)) match{
-            case true => isEq(iter+1)
-            case false => compareFunction(x(iter),x(iter+1)) match{
-                            case true => isEq(iter+1)
-                            case false => false
-                          }
-          }
-            
-        }
-      
-      }
-    
-    x.length match{
-      case 0 => true
-      case 1 => true
-      case _ => isEq(0) 
-    
-    }
+def is[A](a:A,b:A):Boolean={
+    a==b match {
+      case true => true
+      case false => false
+    } 
+  }  
+  
+def isSorted[A](items: Array[A], compare: (A, A) => Boolean): Boolean = items match {
+  
+  
+  case Array()     => true  
+  case Array(_)    => true 
+  case Array(_*) => is(items(0),items(1) ) match{
+    case true => isSorted(items tail,compare)
+    case false => compare(items(0),items(1)) && isSorted(items tail,compare) 
   }
+  
+}
+  
   
 def main(args:Array[String]){
 
@@ -69,10 +56,10 @@ def main(args:Array[String]){
   sortStrArr.foreach(n=>(print(n+" ")))                                        //sorted string array
   println("array is sorted? "+isSorted(sortStrArr,(x:String, y: String)=>x>y)) //true
   
-  replays.foreach(n=>(print(n+" ")))                                  //not sorted with replays      
+  replays.foreach(n=>(print(n+" ")))                                        
   println("array is sorted? "+isSorted(replays,(x:Int, y: Int)=>x<y)) 
   
-  sortedR.foreach(n=>(print(n+" ")))                                  //sorted with replays
+  sortedR.foreach(n=>(print(n+" ")))                                        
   println("array is sorted? "+isSorted(sortedR,(x:Int, y: Int)=>x<y))
 }
 }
