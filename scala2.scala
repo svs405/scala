@@ -1,18 +1,18 @@
 object main {
 
-def isSorted[A](items: Array[A], compare: (A, A) => Boolean, eq:(A,A)=>Boolean): Boolean = items match {
-  
-  
+def isSorted[A](items: Array[A], compare: (A, A) => Boolean): Boolean = items match {
+
   case Array()     => true  
   case Array(_)    => true 
-  case Array(_*) => eq( items(0), items(1) ) && 
-                    isSorted(items tail,compare,eq) ||
-                    compare(items(0),items(1)) && 
-                    isSorted(items tail,compare,eq) 
-  
-  
+  case Array(_*) => eq(items(0), items(1) )&& 
+                    isSorted(items tail,compare) ||
+                    compare(items(0),items(1) ) && 
+                    isSorted(items tail,compare) 
 }
   
+def eq[A](x:A,y:A):Boolean={
+  x==y
+}
   
 def main(args:Array[String]){
 
@@ -28,32 +28,32 @@ def main(args:Array[String]){
   
   //tests
   //empt.foreach(n=>(print(n+" ")))
-  println("array is sorted? "+isSorted(empt,(x:Int, y: Int )=>x<y,(a:Int, b: Int )=>a==b ))  //empty array, true
+  println("array is sorted? "+isSorted(empt,(x:Int, y: Int )=>x>y))  //empty array, true
                                                                       
   single.foreach(n=>(print(n+" ")))
-  println("array is sorted? "+isSorted(single,(x:Int, y: Int)=>x<y,(x:Int, y: Int )=>x==y))  //1 element in array, true
+  println("array is sorted? "+isSorted(single,(x:Int, y: Int)=>x<y))  //1 element in array, true
   
   arr.foreach(n=>(print(n+" ")))
-  println("array is sorted? " + isSorted(arr,(x:Int, y: Int )=>x<y,(x:Int, y: Int )=>x==y))   //not sorted array, false
+  println("array is sorted? " + isSorted(arr,(x:Int, y: Int )=>x<y))   //not sorted array, false
 
   val sortArr = arr.sortWith(_<_)
   sortArr.foreach(n=>(print(n+" ")))                                   //sorted array
-  println("array is sorted? "+isSorted(sortArr,(x:Int, y: Int )=>x<y,(x:Int, y: Int )=>x==y)) //a<b, true
+  println("array is sorted? "+isSorted(sortArr,(x:Int, y: Int )=>x<y)) //a<b, true
   
   val sortArrB = arr.sortWith(_>_)
   sortArrB.foreach(n=>(print(n+" ")))                                   //sorted array
-  println("array is sorted? "+isSorted(sortArrB,(x:Int, y: Int )=>x>y,(x:Int, y: Int )=>x==y)) //a>b, true
+  println("array is sorted? "+isSorted(sortArrB,(x:Int, y: Int )=>x>y)) //a>b, true
   
   strAr.foreach(n=>(print(n+" ")))                                        //string not sorted array
-  println("array is sorted? "+isSorted(strAr,(x:String, y: String)=>x<y,(x:String, y: String)=>x==y)) //false
+  println("array is sorted? "+isSorted(strAr,(x:String, y: String)=>x<y)) //false
   
   sortStrArr.foreach(n=>(print(n+" ")))                                        //sorted string array
-  println("array is sorted? "+isSorted(sortStrArr,(x:String, y: String)=>x>y,(x:String, y: String)=>x==y)) //true
+  println("array is sorted? "+isSorted(sortStrArr,(x:String, y: String)=>x>y)) //true
   
   replays.foreach(n=>(print(n+" ")))                                        
-  println("array is sorted? "+isSorted(replays,(x:Int, y: Int)=>x<y,(x:Int, y: Int)=>x==y)) 
+  println("array is sorted? "+isSorted(replays,(x:Int, y: Int)=>x<y)) 
   
   sortedR.foreach(n=>(print(n+" ")))                                        
-  println("array is sorted? "+isSorted(sortedR,(x:Int, y: Int)=>x<y,(x:Int, y: Int)=>x==y))
+  println("array is sorted? "+isSorted(sortedR,(x:Int, y: Int)=>x<y))
 }
 }
